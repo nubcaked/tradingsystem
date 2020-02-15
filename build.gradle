@@ -16,7 +16,8 @@ repositories {
 }
 
 dependencies {
-	compile 'org.springframework.shell:spring-shell-starter:2.0.1.BUILD-SNAPSHOT'
+	implementation 'org.springframework.shell:spring-shell-starter:2.0.1.BUILD-SNAPSHOT'
+	implementation 'com.google.guava:guava:28.2-jre'
 	implementation 'org.springframework.boot:spring-boot-starter'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
