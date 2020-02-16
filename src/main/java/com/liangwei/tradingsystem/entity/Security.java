@@ -29,4 +29,44 @@ public class Security {
         this.strikePrice = strikePrice;
         this.maturityDate = maturityDate;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTicker() {
+        return ticker;
+    }
+
+    public void setTicker(String ticker) {
+        this.ticker = ticker;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Double getStrikePrice() {
+        return strikePrice;
+    }
+
+    public void setStrikePrice(Double strikePrice) {
+        this.strikePrice = strikePrice;
+    }
+
+    public Date getMaturityDate() {
+        return maturityDate;
+    }
+
+    public void setMaturityDate(Date maturityDate) {
+        this.maturityDate = maturityDate;
+    }
 }
