@@ -9,7 +9,6 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
 import java.util.List;
-import java.util.Optional;
 
 @ShellComponent
 public class SecurityCommand {
@@ -21,13 +20,7 @@ public class SecurityCommand {
     SecurityService securityService;
 
     @ShellMethod("Load H2 database with data")
-    public String loadDb() throws Exception {
-
-        securityService.populateSampleData();
-
-        List<Security> securityList = securityRepository.findAll();
-        String result = Joiner.on("\n").join(securityList);
-
-        return result;
+    public String getSecurities() throws Exception {
+        return securityService.displaySecurities();
     }
 }
