@@ -12,8 +12,9 @@ public class DataProvider {
     @Autowired
     EventBus eventBus;
 
+
+
     @Async
-    @Bean
     public void dispatchEvent() throws InterruptedException {
         int x = 0;
         while (x < 10) {

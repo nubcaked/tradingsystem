@@ -16,18 +16,20 @@ public class Security {
     private Long id;
     private String ticker;
     private String type;
+    private Double price;
     private Double strikePrice;
     private Date maturityDate;
 
     protected Security() {}
 
-    public Security(String ticker, String type) {
-        this(ticker, type, null, null);
+    public Security(String ticker, String type, Double price) {
+        this(ticker, type, price, null, null);
     }
 
-    public Security(String ticker, String type, Double strikePrice, Date maturityDate) {
+    public Security(String ticker, String type, Double price, Double strikePrice, Date maturityDate) {
         this.ticker = ticker;
         this.type = type;
+        this.price = price;
         this.strikePrice = strikePrice;
         this.maturityDate = maturityDate;
     }
@@ -56,6 +58,14 @@ public class Security {
         this.type = type;
     }
 
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
     public Double getStrikePrice() {
         return strikePrice;
     }
@@ -77,6 +87,7 @@ public class Security {
         return MoreObjects.toStringHelper(this)
                 .add("ticker", this.ticker)
                 .add("type", this.type)
+                .add("price", this.price)
                 .add("strikePrice", this.strikePrice)
                 .add("maturityDate", this.maturityDate)
                 .toString();
