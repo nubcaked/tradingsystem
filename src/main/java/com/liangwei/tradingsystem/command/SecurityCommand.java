@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
+import java.util.Map;
+
 @ShellComponent
 public class SecurityCommand {
 
@@ -22,10 +24,10 @@ public class SecurityCommand {
         return securityService.displaySecurities();
     }
 
-    @Autowired
-    public void RegisterEventListener(EventBus eventBus) {
-        eventBus.register(this);
-    }
+//    @Autowired
+//    public void RegisterEventListener(EventBus eventBus) {
+//        eventBus.register(this);
+//    }
 
     @Subscribe
     public void onTestEvent(String string) {
