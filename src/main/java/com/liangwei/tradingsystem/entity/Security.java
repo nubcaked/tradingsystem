@@ -1,5 +1,7 @@
 package com.liangwei.tradingsystem.entity;
 
+import com.google.common.base.MoreObjects;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -68,5 +70,15 @@ public class Security {
 
     public void setMaturityDate(Date maturityDate) {
         this.maturityDate = maturityDate;
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("ticker", this.ticker)
+                .add("type", this.type)
+                .add("strikePrice", this.strikePrice)
+                .add("maturityDate", this.maturityDate)
+                .toString();
     }
 }
