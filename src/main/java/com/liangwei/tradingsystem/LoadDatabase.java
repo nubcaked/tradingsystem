@@ -10,6 +10,7 @@ import org.springframework.shell.standard.ShellComponent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 @Configuration
 public class LoadDatabase {
@@ -28,13 +29,13 @@ public class LoadDatabase {
         Security s3 = new Security("BABA", "stock", 219.63, 0.55, 0.2);
         securityRepository.save(s3);
 
-        Security o1 = new Security("GOOGFEB20C1520", "call", null, null, null, 1520.00, new SimpleDateFormat("yyyyMMdd kkmmss").parse("20200220 050000"));
+        Security o1 = new Security("GOOGFEB20C1520", "call", null, null, null, 1520.00, new GregorianCalendar(2020, 01, 20, 05, 00, 00));
         securityRepository.save(o1);
 
-        Security o2 = new Security("AAPLFEB20C335", "call", null, null, null, 335.00, new SimpleDateFormat("yyyyMMdd kkmmss").parse("20200220 050000"));
+        Security o2 = new Security("AAPLFEB20C335", "call", null, null, null, 335.00, new GregorianCalendar(2020, 01, 20, 05, 00, 00));
         securityRepository.save(o2);
 
-        Security o3 = new Security("BABAFEB20C235", "call", null, null, null, 235.00, new SimpleDateFormat("yyyyMMdd kkmmss").parse("20200220 050000"));
+        Security o3 = new Security("BABAFEB20C235", "call", null, null, null, 235.00, new GregorianCalendar(2020, 01, 20, 05, 00, 00));
         securityRepository.save(o3);
 
         System.out.println("Finished populating securities database.");

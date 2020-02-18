@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Calendar;
 import java.util.Date;
 
 @Entity
@@ -20,7 +21,7 @@ public class Security {
     private Double expectedReturn;
     private Double standardDeviation;
     private Double strikePrice;
-    private Date maturityDate;
+    private Calendar maturityDate;
 
     protected Security() {}
 
@@ -28,7 +29,7 @@ public class Security {
         this(ticker, type, price, null, null, null, null);
     }
 
-    public Security(String ticker, String type, Double price, Double expectedReturn, Double standardDeviation, Double strikePrice, Date maturityDate) {
+    public Security(String ticker, String type, Double price, Double expectedReturn, Double standardDeviation, Double strikePrice, Calendar maturityDate) {
         this.ticker = ticker;
         this.type = type;
         this.price = price;
@@ -94,11 +95,11 @@ public class Security {
         this.strikePrice = strikePrice;
     }
 
-    public Date getMaturityDate() {
+    public Calendar getMaturityDate() {
         return maturityDate;
     }
 
-    public void setMaturityDate(Date maturityDate) {
+    public void setMaturityDate(Calendar maturityDate) {
         this.maturityDate = maturityDate;
     }
 

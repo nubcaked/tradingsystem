@@ -12,8 +12,9 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 @ShellComponent
 public class SecurityCommand {
@@ -34,8 +35,11 @@ public class SecurityCommand {
 
     @ShellMethod("Test")
     public String test() throws Exception {
-        securityService.getStockPriceList();
-        return "";
+        Date date = new SimpleDateFormat("yyyyMMdd kkmmss").parse("20200220 050000");
+        Calendar date2 = new GregorianCalendar(2020, 0, 20, 05, 00, 00);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        int x = ThreadLocalRandom.current().nextInt(1, 3);
+        return "" + x;
     }
 
     @ShellMethod("Simulate price movement for all stocks")
