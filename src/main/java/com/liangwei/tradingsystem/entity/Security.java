@@ -26,7 +26,7 @@ public class Security {
     protected Security() {}
 
     public Security(String ticker, String type, Double price, Double expectedReturn, Double standardDeviation) {
-        this(ticker, type, price, null, null, null, null);
+        this(ticker, type, price, expectedReturn, standardDeviation, null, null);
     }
 
     public Security(String ticker, String type, Double price, Double expectedReturn, Double standardDeviation, Double strikePrice, Calendar maturityDate) {

@@ -48,15 +48,22 @@ public class SecurityService {
             //TODO: Randomize sleep duration and stock price adhering to a certain percentage.
             double price = security.getPrice();
             int deltaTime = ThreadLocalRandom.current().nextInt(500, 1501);
+            double deltaTimeSeconds = deltaTime / 1000.0;
             double expectedReturn = security.getExpectedReturn();
             double standardDeviation = security.getStandardDeviation();
             double standardNormalDistribution = new NormalDistribution(0, 1).sample();
 
-            double deltaPrice = price * (expectedReturn * deltaTime / 7257600 + standardDeviation * standardNormalDistribution * Math.sqrt(deltaTime * 7257600));
+            double deltaPrice = price * (expectedReturn * deltaTimeSeconds / 7257600 + standardDeviation * standardNormalDistribution * Math.sqrt(deltaTimeSeconds / 7257600));
+            double newPrice = price + deltaPrice;
             try {
-                Thread.sleep(1000);
+                Thread.sleep(deltaTime);
+                security.setPrice(newPrice);
+                securityRepository.save(security);
+                if (security.getTicker().equals("GOOG")) {
+                    System.out.println(security.getPrice());
+                }
             } catch (InterruptedException e) {}
-            System.out.println("hihi hoho " + security.getTicker());
+//            System.out.println("hihi hoho " + security.getTicker());
 //            eventBus.post("hihi hoho " + security.getTicker());
         }
     }
