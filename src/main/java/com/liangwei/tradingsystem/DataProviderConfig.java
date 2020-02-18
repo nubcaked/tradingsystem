@@ -2,10 +2,9 @@ package com.liangwei.tradingsystem;
 
 import com.liangwei.tradingsystem.entity.DataProviderFlag;
 import org.springframework.context.annotation.Bean;
-import org.springframework.shell.standard.ShellComponent;
+import org.springframework.context.annotation.Configuration;
 
-//TODO: Try using @Configuration
-@ShellComponent
+@Configuration
 public class DataProviderConfig {
 
     @Bean

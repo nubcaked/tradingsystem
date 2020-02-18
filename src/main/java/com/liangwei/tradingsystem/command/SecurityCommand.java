@@ -50,10 +50,10 @@ public class SecurityCommand {
         dataProviderFlag.setRunFlag(false);
     }
 
-//    @Autowired
-//    public void RegisterEventListener(EventBus eventBus) {
-//        eventBus.register(this);
-//    }
+    @Autowired
+    public void RegisterEventListener(EventBus eventBus) {
+        eventBus.register(this);
+    }
 
     @Subscribe
     public void onTestEvent(String string) {

@@ -17,19 +17,23 @@ public class Security {
     private String ticker;
     private String type;
     private Double price;
+    private Double expectedReturn;
+    private Double standardDeviation;
     private Double strikePrice;
     private Date maturityDate;
 
     protected Security() {}
 
-    public Security(String ticker, String type, Double price) {
-        this(ticker, type, price, null, null);
+    public Security(String ticker, String type, Double price, Double expectedReturn, Double standardDeviation) {
+        this(ticker, type, price, null, null, null, null);
     }
 
-    public Security(String ticker, String type, Double price, Double strikePrice, Date maturityDate) {
+    public Security(String ticker, String type, Double price, Double expectedReturn, Double standardDeviation, Double strikePrice, Date maturityDate) {
         this.ticker = ticker;
         this.type = type;
         this.price = price;
+        this.expectedReturn = expectedReturn;
+        this.standardDeviation = standardDeviation;
         this.strikePrice = strikePrice;
         this.maturityDate = maturityDate;
     }
@@ -64,6 +68,22 @@ public class Security {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public Double getExpectedReturn() {
+        return expectedReturn;
+    }
+
+    public void setExpectedReturn(Double expectedReturn) {
+        this.expectedReturn = expectedReturn;
+    }
+
+    public Double getStandardDeviation() {
+        return standardDeviation;
+    }
+
+    public void setStandardDeviation(Double standardDeviation) {
+        this.standardDeviation = standardDeviation;
     }
 
     public Double getStrikePrice() {

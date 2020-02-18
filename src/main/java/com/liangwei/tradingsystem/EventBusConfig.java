@@ -2,10 +2,9 @@ package com.liangwei.tradingsystem;
 
 import com.google.common.eventbus.EventBus;
 import org.springframework.context.annotation.Bean;
-import org.springframework.shell.standard.ShellComponent;
+import org.springframework.context.annotation.Configuration;
 
-//TODO: Try using @Configuration
-@ShellComponent
+@Configuration
 public class EventBusConfig {
     @Bean
     public EventBus eventBus() {
