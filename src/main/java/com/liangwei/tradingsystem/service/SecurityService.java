@@ -45,7 +45,7 @@ public class SecurityService {
     @Async
     public void moveStockPrice(Security security) {
         while (dataProviderFlag.isRunFlag()) {
-            //TODO: Randomize sleep duration and stock price adhering to a certain percentage.
+            //TODO: Use eventBus to publish messages.
             double price = security.getPrice();
             int deltaTime = ThreadLocalRandom.current().nextInt(500, 1501);
             double deltaTimeSeconds = deltaTime / 1000.0;
