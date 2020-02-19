@@ -20,6 +20,8 @@ public class LoadDatabase {
 
     @Bean
     public void populateSecurities() throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
         Security s1 = new Security("GOOG", "stock", 1518.73, 0.2, 0.1);
         securityRepository.save(s1);
 
@@ -29,13 +31,13 @@ public class LoadDatabase {
         Security s3 = new Security("BABA", "stock", 219.63, 0.55, 0.2);
         securityRepository.save(s3);
 
-        Security o1 = new Security("GOOGFEB20C1520", "call", null, null, null, 1520.00, new GregorianCalendar(2020, 01, 20, 05, 00, 00));
+        Security o1 = new Security("GOOGFEB20C1520", "call", null, null, null, 1520.00, simpleDateFormat.format(new GregorianCalendar(2020, 01, 20, 05, 00, 00).getTime()));
         securityRepository.save(o1);
 
-        Security o2 = new Security("AAPLFEB20C335", "call", null, null, null, 335.00, new GregorianCalendar(2020, 01, 20, 05, 00, 00));
+        Security o2 = new Security("AAPLFEB20C335", "call", null, null, null, 335.00, simpleDateFormat.format(new GregorianCalendar(2020, 01, 20, 05, 00, 00).getTime()));
         securityRepository.save(o2);
 
-        Security o3 = new Security("BABAFEB20C235", "call", null, null, null, 235.00, new GregorianCalendar(2020, 01, 20, 05, 00, 00));
+        Security o3 = new Security("BABAFEB20C235", "call", null, null, null, 235.00, simpleDateFormat.format(new GregorianCalendar(2020, 01, 20, 05, 00, 00).getTime()));
         securityRepository.save(o3);
 
         System.out.println("Finished populating securities database.");

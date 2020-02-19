@@ -1,14 +1,10 @@
 package com.liangwei.tradingsystem.command;
 
-import com.google.common.eventbus.EventBus;
-import com.google.common.eventbus.Subscribe;
-import com.liangwei.tradingsystem.dataprovider.DataProvider;
 import com.liangwei.tradingsystem.entity.DataProviderFlag;
 import com.liangwei.tradingsystem.entity.Security;
 import com.liangwei.tradingsystem.repository.SecurityRepository;
 import com.liangwei.tradingsystem.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
@@ -35,11 +31,16 @@ public class SecurityCommand {
 
     @ShellMethod("Test")
     public String test() throws Exception {
-        Date date = new SimpleDateFormat("yyyyMMdd kkmmss").parse("20200220 050000");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+//        Date date = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse("20200220 050000");
         Calendar date2 = new GregorianCalendar(2020, 0, 20, 05, 00, 00);
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         int x = ThreadLocalRandom.current().nextInt(1, 3);
-        return "" + x;
+//        return sdf.format(date2.getTime());
+//        return Math.log1p(12) + " " + Math.log(12);
+//        return securityRepository.findByTicker("GOOG").get().getPrice().toString();
+//        return simpleDateFormat.format(new GregorianCalendar().getTime());
+        return Math.exp(-12) + "";
     }
 
     @ShellMethod("Simulate price movement for all stocks")
@@ -52,17 +53,6 @@ public class SecurityCommand {
     @ShellMethod("Stop price movement for all stocks")
     public void stopPriceMovements() {
         dataProviderFlag.setRunFlag(false);
-    }
-
-    @Autowired
-    public void RegisterEventListener(EventBus eventBus) {
-        eventBus.register(this);
-    }
-
-    @Subscribe
-    public void onTestEvent(String string) {
-        System.out.println("Received:");
-        System.out.println(string);
     }
 
 }

@@ -1,11 +1,13 @@
 package com.liangwei.tradingsystem.entity;
 
 import com.google.common.base.MoreObjects;
+import org.h2.tools.SimpleResultSet;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -21,7 +23,7 @@ public class Security {
     private Double expectedReturn;
     private Double standardDeviation;
     private Double strikePrice;
-    private Calendar maturityDate;
+    private String maturityDate;
 
     protected Security() {}
 
@@ -29,7 +31,7 @@ public class Security {
         this(ticker, type, price, expectedReturn, standardDeviation, null, null);
     }
 
-    public Security(String ticker, String type, Double price, Double expectedReturn, Double standardDeviation, Double strikePrice, Calendar maturityDate) {
+    public Security(String ticker, String type, Double price, Double expectedReturn, Double standardDeviation, Double strikePrice, String maturityDate) {
         this.ticker = ticker;
         this.type = type;
         this.price = price;
@@ -95,11 +97,11 @@ public class Security {
         this.strikePrice = strikePrice;
     }
 
-    public Calendar getMaturityDate() {
+    public String getMaturityDate() {
         return maturityDate;
     }
 
-    public void setMaturityDate(Calendar maturityDate) {
+    public void setMaturityDate(String maturityDate) {
         this.maturityDate = maturityDate;
     }
 
