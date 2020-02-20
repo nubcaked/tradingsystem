@@ -34,17 +34,18 @@ public class DataSubscriber {
     }
 
     @Subscribe
-    public void stockPriceSubscribe(Security security) {
-        System.out.println("Security{ticker=" + security.getTicker() + ", price=" + security.getPrice() + "}");
+    public void portfolioSubscriber(Security security) {
+        System.out.println("Security{ticker=" + security.getTicker() + ", price=" + security.getPrice() + ", optionPrice=" + calculateOptionPrice(security.getTicker()) + "}");
     }
 
-    private double calculateOptionPrice(Security security) {
+    public double calculateOptionPrice(String ticker) {
         try {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-            Security option = securityRepository.findByTicker(security.getTicker()).get();
+            Security option = securityRepository.findByTicker(ticker).get();
+            Security stock = securityRepository.findByTicker(ticker.substring(0, 4)).get();
 
-            double stockPrice = security.getPrice();
-            double standardDeviation = security.getStandardDeviation();
+            double stockPrice = stock.getPrice();
+            double standardDeviation = stock.getStandardDeviation();
             double strikePrice = option.getStrikePrice();
             double interestRate = 0.02;
             long timeToMaturity = (simpleDateFormat.parse(option.getMaturityDate()).getTime() - new GregorianCalendar().getTimeInMillis()) / 31536000000L; // 1000 * 60 * 60 * 24 * 365 = 31536000000
@@ -52,11 +53,15 @@ public class DataSubscriber {
             double d2 = d1 - (standardDeviation * Math.sqrt(timeToMaturity));
 
             double callOptionPrice = (stockPrice * new NormalDistribution().cumulativeProbability(d1)) - (strikePrice * Math.exp(-interestRate * timeToMaturity) * new NormalDistribution().cumulativeProbability(d2));
-            
+            double putOptionPrice = (strikePrice * Math.exp(-interestRate * timeToMaturity) * new NormalDistribution().cumulativeProbability(-d2)) - (stockPrice * new NormalDistribution().cumulativeProbability(-d1));
 
+            if (option.getType().equals("call")) {
+                return callOptionPrice;
+            } else if (option.getType().equals("put")) {
+                return putOptionPrice;
+            }
         } catch (Exception e) {}
-
-        return 1.1;
+        return -1;
     }
 
 }

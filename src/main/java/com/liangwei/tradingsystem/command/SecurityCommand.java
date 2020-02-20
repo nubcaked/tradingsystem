@@ -1,5 +1,6 @@
 package com.liangwei.tradingsystem.command;
 
+import com.liangwei.tradingsystem.dataprovider.DataSubscriber;
 import com.liangwei.tradingsystem.entity.DataProviderFlag;
 import com.liangwei.tradingsystem.entity.Security;
 import com.liangwei.tradingsystem.repository.SecurityRepository;
@@ -24,6 +25,9 @@ public class SecurityCommand {
     @Autowired
     DataProviderFlag dataProviderFlag;
 
+    @Autowired
+    DataSubscriber dataSubscriber;
+
     @ShellMethod("Load H2 database with data")
     public String getSecurities() throws Exception {
         return securityService.displaySecurities();
@@ -40,7 +44,8 @@ public class SecurityCommand {
 //        return Math.log1p(12) + " " + Math.log(12);
 //        return securityRepository.findByTicker("GOOG").get().getPrice().toString();
 //        return simpleDateFormat.format(new GregorianCalendar().getTime());
-        return Math.exp(-12) + "";
+//        return Math.exp(-12) + "";
+        return dataSubscriber.calculateOptionPrice("GOOG200417C01500000") + ""; //TODO: test all the optionPricing formula using this method
     }
 
     @ShellMethod("Simulate price movement for all stocks")

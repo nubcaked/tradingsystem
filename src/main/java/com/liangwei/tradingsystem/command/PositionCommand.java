@@ -1,5 +1,6 @@
 package com.liangwei.tradingsystem.command;
 
+import com.google.common.collect.ImmutableList;
 import com.liangwei.tradingsystem.repository.SecurityRepository;
 import com.liangwei.tradingsystem.service.PositionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,11 @@ public class PositionCommand {
     SecurityRepository securityRepository;
 
     @ShellMethod("Displays greeting message to the user whose name is supplied")
-    public String getPositions() throws Exception {
-        String positions = positionService.getPositions("positions.csv");
-        return positions;
+    public void getPositions() throws Exception {
+        ImmutableList<String> positions = positionService.getPositions("positions.csv");
+        positions.forEach(line -> {
+            System.out.println(line);
+        });
+        return;
     }
 }

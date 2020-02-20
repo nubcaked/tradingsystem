@@ -21,8 +21,9 @@ public class LoadDatabase {
     @Bean
     public void populateSecurities() throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        //TODO: redo the list of data to be loaded into the db based on eurexchange.com's list
 
-        Security s1 = new Security("GOOG", "stock", 1518.73, 0.2, 0.1);
+        Security s1 = new Security("GOOG", "stock", 1528.38, 0.2, 0.1);
         securityRepository.save(s1);
 
         Security s2 = new Security("AAPL", "stock", 324.95, 0.3, 0.3);
@@ -31,13 +32,13 @@ public class LoadDatabase {
         Security s3 = new Security("BABA", "stock", 219.63, 0.55, 0.2);
         securityRepository.save(s3);
 
-        Security o1 = new Security("GOOGFEB20C1520", "call", null, null, null, 1520.00, simpleDateFormat.format(new GregorianCalendar(2020, 01, 20, 05, 00, 00).getTime()));
+        Security o1 = new Security("GOOG200417C01500000", "call", null, null, null, 1500.00, simpleDateFormat.format(new GregorianCalendar(2020, 3, 17, 5, 0, 0).getTime()));
         securityRepository.save(o1);
 
-        Security o2 = new Security("AAPLFEB20C335", "call", null, null, null, 335.00, simpleDateFormat.format(new GregorianCalendar(2020, 01, 20, 05, 00, 00).getTime()));
+        Security o2 = new Security("AAPL200619C00075000", "call", null, null, null, 75.00, simpleDateFormat.format(new GregorianCalendar(2020, 5, 19, 5, 0, 0).getTime()));
         securityRepository.save(o2);
 
-        Security o3 = new Security("BABAFEB20C235", "call", null, null, null, 235.00, simpleDateFormat.format(new GregorianCalendar(2020, 01, 20, 05, 00, 00).getTime()));
+        Security o3 = new Security("BABA200918P00220000", "put", null, null, null, 220.00, simpleDateFormat.format(new GregorianCalendar(2020, 8, 18, 5, 0, 0).getTime()));
         securityRepository.save(o3);
 
         System.out.println("Finished populating securities database.");

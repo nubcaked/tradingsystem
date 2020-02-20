@@ -24,6 +24,7 @@ public class Security {
     private Double standardDeviation;
     private Double strikePrice;
     private String maturityDate;
+    //TODO: create a new attribute parentTicker to tag options to their underlying stock
 
     protected Security() {}
 
