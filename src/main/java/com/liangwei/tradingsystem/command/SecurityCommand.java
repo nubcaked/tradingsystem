@@ -45,7 +45,7 @@ public class SecurityCommand {
 //        return securityRepository.findByTicker("GOOG").get().getPrice().toString();
 //        return simpleDateFormat.format(new GregorianCalendar().getTime());
 //        return Math.exp(-12) + "";
-        return dataSubscriber.calculateOptionPrice("GOOG200417C01500000") + ""; //TODO: test all the optionPricing formula using this method
+        return dataSubscriber.calculateOptionPrice("NL0011585146") + "";
     }
 
     @ShellMethod("Simulate price movement for all stocks")

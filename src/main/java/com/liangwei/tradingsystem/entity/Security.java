@@ -24,15 +24,15 @@ public class Security {
     private Double standardDeviation;
     private Double strikePrice;
     private String maturityDate;
-    //TODO: create a new attribute parentTicker to tag options to their underlying stock
+    private String parentTicker;
 
     protected Security() {}
 
     public Security(String ticker, String type, Double price, Double expectedReturn, Double standardDeviation) {
-        this(ticker, type, price, expectedReturn, standardDeviation, null, null);
+        this(ticker, type, price, expectedReturn, standardDeviation, null, null, null);
     }
 
-    public Security(String ticker, String type, Double price, Double expectedReturn, Double standardDeviation, Double strikePrice, String maturityDate) {
+    public Security(String ticker, String type, Double price, Double expectedReturn, Double standardDeviation, Double strikePrice, String maturityDate, String parentTicker) {
         this.ticker = ticker;
         this.type = type;
         this.price = price;
@@ -40,6 +40,7 @@ public class Security {
         this.standardDeviation = standardDeviation;
         this.strikePrice = strikePrice;
         this.maturityDate = maturityDate;
+        this.parentTicker = parentTicker;
     }
 
     public Long getId() {
@@ -104,6 +105,14 @@ public class Security {
 
     public void setMaturityDate(String maturityDate) {
         this.maturityDate = maturityDate;
+    }
+
+    public String getParentTicker() {
+        return parentTicker;
+    }
+
+    public void setParentTicker(String parentTicker) {
+        this.parentTicker = parentTicker;
     }
 
     @Override

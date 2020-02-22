@@ -42,7 +42,7 @@ public class DataSubscriber {
         try {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
             Security option = securityRepository.findByTicker(ticker).get();
-            Security stock = securityRepository.findByTicker(ticker.substring(0, 4)).get();
+            Security stock = securityRepository.findByTicker(option.getParentTicker()).get();
 
             double stockPrice = stock.getPrice();
             double standardDeviation = stock.getStandardDeviation();
