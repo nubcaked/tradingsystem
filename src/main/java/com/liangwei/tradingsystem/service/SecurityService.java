@@ -2,6 +2,7 @@ package com.liangwei.tradingsystem.service;
 
 import com.google.common.base.Joiner;
 import com.google.common.eventbus.EventBus;
+import com.liangwei.tradingsystem.portfoliobroker.PortfolioPublisher;
 import com.liangwei.tradingsystem.portfoliobroker.PortfolioSubscriber;
 import com.liangwei.tradingsystem.DataProviderFlag;
 import com.liangwei.tradingsystem.entity.Security;
@@ -28,6 +29,9 @@ public class SecurityService {
 
     @Autowired
     PortfolioSubscriber portfolioSubscriber;
+
+    @Autowired
+    PortfolioPublisher portfolioPublisher;
 
     @Autowired
     DataProviderFlag dataProviderFlag;

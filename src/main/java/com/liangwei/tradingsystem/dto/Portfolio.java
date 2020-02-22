@@ -1,7 +1,9 @@
 package com.liangwei.tradingsystem.dto;
 
 import com.liangwei.tradingsystem.entity.Security;
+import org.springframework.boot.json.JsonParser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Portfolio {
@@ -10,7 +12,7 @@ public class Portfolio {
     private double netAssetValue;
 
     public Portfolio() {
-        this(null, 0.0);
+        this(new ArrayList<>(), 0.0);
     }
 
     public Portfolio(List<Security> securityList, double netAssetValue) {
@@ -32,6 +34,14 @@ public class Portfolio {
 
     public void setNetAssetValue(double netAssetValue) {
         this.netAssetValue = netAssetValue;
+    }
+
+    @Override
+    public String toString() {
+        return "Portfolio{" +
+                "securityList=" + securityList +
+                ", netAssetValue=" + netAssetValue +
+                '}';
     }
 
 }

@@ -8,6 +8,7 @@ import com.liangwei.tradingsystem.dto.Position;
 import com.liangwei.tradingsystem.service.PortfolioService;
 import com.liangwei.tradingsystem.service.PositionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -28,13 +29,19 @@ public class PortfolioPublisher {
     @Autowired
     DataProviderFlag dataProviderFlag;
 
-    public void publishPortfolio() throws IOException {
-        List<Position> positionList = positionService.getPositions("positions.csv");
-        Portfolio portfolio = portfolioService.populatePortfolio(positionList);
+    @Async
+    public void publishPortfolio() {
+        try {
+            List<Position> positionList = positionService.getPositions("positions.csv");
 
-        while (dataProviderFlag.isRunFlag()) {
-
-        }
+            while (dataProviderFlag.isRunFlag()) {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {}
+                Portfolio portfolio = portfolioService.populatePortfolio(positionList);
+                System.out.println(portfolio); //TODO: publish instead of printing
+            }
+        } catch (IOException e) {}
     }
 
 }

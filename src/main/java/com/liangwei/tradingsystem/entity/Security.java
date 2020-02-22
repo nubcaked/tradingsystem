@@ -119,10 +119,10 @@ public class Security {
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("ticker", this.ticker)
-                .add("type", this.type)
+//                .add("type", this.type)
                 .add("price", this.price)
-                .add("strikePrice", this.strikePrice)
-                .add("maturityDate", this.maturityDate)
+//                .add("strikePrice", this.strikePrice)
+//                .add("maturityDate", this.maturityDate)
                 .toString();
     }
 }
