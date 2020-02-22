@@ -115,6 +115,7 @@ public class Security {
         this.parentTicker = parentTicker;
     }
 
+    //TODO: uncomment fields after creating SecurityDTO
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
