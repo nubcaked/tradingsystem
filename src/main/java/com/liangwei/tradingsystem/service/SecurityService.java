@@ -2,7 +2,7 @@ package com.liangwei.tradingsystem.service;
 
 import com.google.common.base.Joiner;
 import com.google.common.eventbus.EventBus;
-import com.liangwei.tradingsystem.dataprovider.DataSubscriber;
+import com.liangwei.tradingsystem.portfoliobroker.PortfolioSubscriber;
 import com.liangwei.tradingsystem.entity.DataProviderFlag;
 import com.liangwei.tradingsystem.entity.Security;
 import com.liangwei.tradingsystem.repository.SecurityRepository;
@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
@@ -26,7 +27,7 @@ public class SecurityService {
     EventBus eventBus;
 
     @Autowired
-    DataSubscriber dataSubscriber;
+    PortfolioSubscriber portfolioSubscriber;
 
     @Autowired
     DataProviderFlag dataProviderFlag;
@@ -55,12 +56,11 @@ public class SecurityService {
         return result;
     }
 
-    //TODO: make this method call updateStockPrice() and updateOptionPrice()
     @Async
-    public void moveStockPrice(Security security) {
+    public void moveStockPrice(Security stock) {
         while (dataProviderFlag.isRunFlag()) {
-            updateStockPrice(security);
-            updateOptionPrice(security);
+            updateStockPrice(stock);
+            updateOptionPrice(stock);
         }
     }
 
@@ -83,31 +83,32 @@ public class SecurityService {
     }
 
     public void updateOptionPrice(Security stock) {
-        try {
-//            Security stock = securityRepository.findByTicker(option.getParentTicker()).get();
-            String ticker = stock.getTicker();
-            Security option = securityRepository.findByTicker(ticker).get(); //TODO: findByParentTicker() instead
+        List<Security> optionList = securityRepository.findByParentTicker(stock.getTicker());
+        optionList.forEach(option -> {
+            try {
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                double stockPrice = stock.getPrice();
+                double standardDeviation = stock.getStandardDeviation();
+                double strikePrice = option.getStrikePrice();
+                double interestRate = 0.02;
+                long timeToMaturity = (simpleDateFormat.parse(option.getMaturityDate()).getTime() - new GregorianCalendar().getTimeInMillis()) / 31536000000L; // 1000 * 60 * 60 * 24 * 365 = 31536000000
+                double d1 = (Math.log(stockPrice / strikePrice) + (interestRate + Math.pow(standardDeviation, 2) / 2) * timeToMaturity) / (standardDeviation * Math.sqrt(timeToMaturity));
+                double d2 = d1 - (standardDeviation * Math.sqrt(timeToMaturity));
 
-            double stockPrice = stock.getPrice();
-            double standardDeviation = stock.getStandardDeviation();
-            double strikePrice = option.getStrikePrice();
-            double interestRate = 0.02;
-            long timeToMaturity = (simpleDateFormat.parse(option.getMaturityDate()).getTime() - new GregorianCalendar().getTimeInMillis()) / 31536000000L; // 1000 * 60 * 60 * 24 * 365 = 31536000000
-            double d1 = (Math.log(stockPrice / strikePrice) + (interestRate + Math.pow(standardDeviation, 2) / 2) * timeToMaturity) / (standardDeviation * Math.sqrt(timeToMaturity));
-            double d2 = d1 - (standardDeviation * Math.sqrt(timeToMaturity));
+                double callOptionPrice = (stockPrice * new NormalDistribution().cumulativeProbability(d1)) - (strikePrice * Math.exp(-interestRate * timeToMaturity) * new NormalDistribution().cumulativeProbability(d2));
+                double putOptionPrice = (strikePrice * Math.exp(-interestRate * timeToMaturity) * new NormalDistribution().cumulativeProbability(-d2)) - (stockPrice * new NormalDistribution().cumulativeProbability(-d1));
 
-            double callOptionPrice = (stockPrice * new NormalDistribution().cumulativeProbability(d1)) - (strikePrice * Math.exp(-interestRate * timeToMaturity) * new NormalDistribution().cumulativeProbability(d2));
-            double putOptionPrice = (strikePrice * Math.exp(-interestRate * timeToMaturity) * new NormalDistribution().cumulativeProbability(-d2)) - (stockPrice * new NormalDistribution().cumulativeProbability(-d1));
+                if (option.getType().equals("call")) {
+                    option.setPrice(callOptionPrice);
+                } else {
+                    option.setPrice(putOptionPrice);
+                }
+                securityRepository.save(option);
 
-            //TODO: save the option price to db
-//            if (option.getType().equals("call")) {
-//                return callOptionPrice;
-//            } else if (option.getType().equals("put")) {
-//                return putOptionPrice;
-//            }
-        } catch (Exception e) {}
+//                System.out.println(option.getTicker() + ": " + securityRepository.findByTicker(option.getTicker()).get().getPrice());
+            } catch (ParseException e) {}
+        });
     }
 
 }
