@@ -4,7 +4,6 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableList;
 import com.google.common.io.CharSource;
 import com.google.common.io.Resources;
-import com.liangwei.tradingsystem.entity.Position;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
