@@ -23,7 +23,7 @@ public class PortfolioSubscriber {
 
     @Subscribe
     public void portfolioSubscriber(Security security) {
-        
+
     }
 
 //    public double calculateOptionPrice(String ticker) {

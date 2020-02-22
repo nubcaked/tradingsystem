@@ -1,7 +1,7 @@
 package com.liangwei.tradingsystem.command;
 
 import com.liangwei.tradingsystem.portfoliobroker.PortfolioSubscriber;
-import com.liangwei.tradingsystem.entity.DataProviderFlag;
+import com.liangwei.tradingsystem.DataProviderFlag;
 import com.liangwei.tradingsystem.entity.Security;
 import com.liangwei.tradingsystem.repository.SecurityRepository;
 import com.liangwei.tradingsystem.service.SecurityService;

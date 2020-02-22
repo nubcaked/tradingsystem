@@ -3,7 +3,7 @@ package com.liangwei.tradingsystem.service;
 import com.google.common.base.Joiner;
 import com.google.common.eventbus.EventBus;
 import com.liangwei.tradingsystem.portfoliobroker.PortfolioSubscriber;
-import com.liangwei.tradingsystem.entity.DataProviderFlag;
+import com.liangwei.tradingsystem.DataProviderFlag;
 import com.liangwei.tradingsystem.entity.Security;
 import com.liangwei.tradingsystem.repository.SecurityRepository;
 import org.apache.commons.math3.distribution.NormalDistribution;

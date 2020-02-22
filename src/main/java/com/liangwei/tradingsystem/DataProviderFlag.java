@@ -1,4 +1,4 @@
-package com.liangwei.tradingsystem.entity;
+package com.liangwei.tradingsystem;
 
 public class DataProviderFlag {
 
