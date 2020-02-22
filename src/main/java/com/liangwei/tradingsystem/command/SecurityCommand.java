@@ -4,6 +4,7 @@ import com.liangwei.tradingsystem.portfoliobroker.PortfolioSubscriber;
 import com.liangwei.tradingsystem.DataProviderFlag;
 import com.liangwei.tradingsystem.entity.Security;
 import com.liangwei.tradingsystem.repository.SecurityRepository;
+import com.liangwei.tradingsystem.service.PositionService;
 import com.liangwei.tradingsystem.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
@@ -28,6 +29,9 @@ public class SecurityCommand {
     @Autowired
     PortfolioSubscriber portfolioSubscriber;
 
+    @Autowired
+    PositionService positionService;
+
     @ShellMethod("Load H2 database with data")
     public String getSecurities() throws Exception {
         return securityService.displaySecurities();
@@ -44,7 +48,8 @@ public class SecurityCommand {
 //        return Math.log1p(12) + " " + Math.log(12);
 //        return securityRepository.findByTicker("GOOG").get().getPrice().toString();
 //        return simpleDateFormat.format(new GregorianCalendar().getTime());
-        return Math.exp(-12) + "";
+//        return Math.exp(-12) + "";
+        return positionService.getPositions("positions.csv").toString();
     }
 
     @ShellMethod("Simulate price movement for all stocks")

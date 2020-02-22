@@ -9,6 +9,10 @@ public class Portfolio {
     private List<Security> securityList;
     private double netAssetValue;
 
+    public Portfolio() {
+        this(null, 0.0);
+    }
+
     public Portfolio(List<Security> securityList, double netAssetValue) {
         this.securityList = securityList;
         this.netAssetValue = netAssetValue;
@@ -29,5 +33,5 @@ public class Portfolio {
     public void setNetAssetValue(double netAssetValue) {
         this.netAssetValue = netAssetValue;
     }
-    
+
 }
