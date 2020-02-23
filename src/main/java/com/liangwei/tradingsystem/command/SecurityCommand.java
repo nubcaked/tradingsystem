@@ -28,7 +28,7 @@ public class SecurityCommand {
     @Autowired
     EventBus eventBus;
 
-    @ShellMethod("Load H2 database with data")
+    @ShellMethod("Displays data in the H2 database")
     public String getSecurities() throws Exception {
         return securityService.displaySecurities();
     }

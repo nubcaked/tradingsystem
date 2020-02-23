@@ -13,7 +13,7 @@ public class PositionCommand {
     @Autowired
     PositionService positionService;
 
-    @ShellMethod("Displays greeting message to the user whose name is supplied")
+    @ShellMethod("Displays a list of positions by extracting from a csv file")
     public String getPositions() throws IOException {
         return positionService.getPositions("positions.csv").toString();
     }
