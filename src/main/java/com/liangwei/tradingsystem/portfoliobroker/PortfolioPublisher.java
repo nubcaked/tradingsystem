@@ -1,60 +1,45 @@
 package com.liangwei.tradingsystem.portfoliobroker;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
-import com.liangwei.tradingsystem.DataProviderFlag;
 import com.liangwei.tradingsystem.dto.Portfolio;
 import com.liangwei.tradingsystem.dto.Position;
-import com.liangwei.tradingsystem.service.PortfolioService;
-import com.liangwei.tradingsystem.service.PositionService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Component;
-
-import java.io.IOException;
-import java.util.List;
+import com.liangwei.tradingsystem.entity.Security;
 
 public class PortfolioPublisher {
 
     private Portfolio portfolio;
+    private EventBus eventBus;
 
-    @Autowired
-    EventBus eventBus;
-
-    @Autowired
-    PositionService positionService;
-
-    @Autowired
-    PortfolioService portfolioService;
-
-    @Autowired
-    DataProviderFlag dataProviderFlag;
-
-    public PortfolioPublisher(Portfolio portfolio) {
+    public PortfolioPublisher(Portfolio portfolio, EventBus eventBus) {
         this.portfolio = portfolio;
+        this.eventBus = eventBus;
     }
 
 
     @Subscribe
-    public void testSubscribe(String s) {
-        System.out.println(s);
+    public void updatePortfolio(Security security) {
+        if (portfolio.getPositionMap().containsKey(security.getTicker())) {
+            Position position = portfolio.getPositionMap().get(security.getTicker());
+            position.setMarketValue(security.getPrice() * position.getQuantity());
+            portfolio.setNetAssetValue(portfolio.getNetAssetValue() + position.getMarketValue());
+            eventBus.post(portfolio);
+        }
     }
 
-    @Async
-    public void publishPortfolio() {
-        try {
-            List<Position> positionList = positionService.getPositions("positions.csv");
-
-            while (dataProviderFlag.isRunFlag()) {
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {}
-                Portfolio portfolio = portfolioService.populatePortfolio(positionList);
-                System.out.println(portfolio); //TODO: publish instead of printing
-                System.out.println();
-            }
-        } catch (IOException e) {}
+    public Portfolio getPortfolio() {
+        return portfolio;
     }
 
+    public void setPortfolio(Portfolio portfolio) {
+        this.portfolio = portfolio;
+    }
+
+    public EventBus getEventBus() {
+        return eventBus;
+    }
+
+    public void setEventBus(EventBus eventBus) {
+        this.eventBus = eventBus;
+    }
 }

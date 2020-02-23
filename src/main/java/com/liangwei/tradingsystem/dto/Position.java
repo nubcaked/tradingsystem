@@ -8,7 +8,7 @@ public class Position {
     private double marketValue;
 
     public Position(String ticker, String type, int quantity) {
-        this(ticker, type, quantity, -1.0);
+        this(ticker, type, quantity, 0.0);
     }
 
     public Position(String ticker, String type, int quantity, double marketValue) {

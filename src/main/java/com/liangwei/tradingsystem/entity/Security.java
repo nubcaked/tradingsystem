@@ -1,15 +1,11 @@
 package com.liangwei.tradingsystem.entity;
 
 import com.google.common.base.MoreObjects;
-import org.h2.tools.SimpleResultSet;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 @Entity
 public class Security {
@@ -115,15 +111,14 @@ public class Security {
         this.parentTicker = parentTicker;
     }
 
-    //TODO: uncomment fields after creating SecurityDTO
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("ticker", this.ticker)
-//                .add("type", this.type)
+                .add("type", this.type)
                 .add("price", this.price)
-//                .add("strikePrice", this.strikePrice)
-//                .add("maturityDate", this.maturityDate)
+                .add("strikePrice", this.strikePrice)
+                .add("maturityDate", this.maturityDate)
                 .toString();
     }
 }

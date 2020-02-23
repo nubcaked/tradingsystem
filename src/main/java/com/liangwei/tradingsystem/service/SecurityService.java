@@ -2,8 +2,6 @@ package com.liangwei.tradingsystem.service;
 
 import com.google.common.base.Joiner;
 import com.google.common.eventbus.EventBus;
-import com.liangwei.tradingsystem.portfoliobroker.PortfolioPublisher;
-import com.liangwei.tradingsystem.portfoliobroker.PortfolioSubscriber;
 import com.liangwei.tradingsystem.DataProviderFlag;
 import com.liangwei.tradingsystem.entity.Security;
 import com.liangwei.tradingsystem.repository.SecurityRepository;
@@ -14,7 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
@@ -28,9 +27,6 @@ public class SecurityService {
     EventBus eventBus;
 
     @Autowired
-    PortfolioSubscriber portfolioSubscriber;
-
-    @Autowired
     DataProviderFlag dataProviderFlag;
 
     public String displaySecurities() {
@@ -39,21 +35,10 @@ public class SecurityService {
         return result;
     }
 
-    public String displayStock() {
-        List<Security> securityList = securityRepository.findAll().stream()
-                .filter(security -> security.getType().equals("stock"))
-                .collect(Collectors.toList());
-        String result = Joiner.on("\n").join(securityList);
-        return result;
-    }
-
     public List<Security> getStockPriceList() {
         List<Security> result = securityRepository.findAll().stream()
                 .filter(s -> s.getType().equals("stock"))
                 .collect(Collectors.toList());
-
-//        result.forEach(s -> System.out.println(s.getTicker()));
-
         return result;
     }
 
@@ -78,8 +63,8 @@ public class SecurityService {
         try {
             Thread.sleep(deltaTime);
             stock.setPrice(newPrice);
+            eventBus.post(stock);
             securityRepository.save(stock);
-            eventBus.post("TESTING TESTING");
         } catch (InterruptedException e) {}
     }
 
@@ -105,9 +90,8 @@ public class SecurityService {
                 } else {
                     option.setPrice(putOptionPrice);
                 }
+                eventBus.post(option);
                 securityRepository.save(option);
-
-//                System.out.println(option.getTicker() + ": " + securityRepository.findByTicker(option.getTicker()).get().getPrice());
             } catch (ParseException e) {}
         });
     }

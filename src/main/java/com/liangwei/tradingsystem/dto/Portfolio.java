@@ -1,31 +1,28 @@
 package com.liangwei.tradingsystem.dto;
 
-import com.liangwei.tradingsystem.entity.Security;
-import org.springframework.boot.json.JsonParser;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Portfolio {
 
-    private List<Position> positionList;
+    private Map<String, Position> positionMap;
     private double netAssetValue;
 
     public Portfolio() {
-        this(new ArrayList<>(), 0.0);
+        this(new HashMap<>(), 0.0);
     }
 
-    public Portfolio(List<Position> positionList, double netAssetValue) {
-        this.positionList = positionList;
+    public Portfolio(Map<String, Position> positionMap, double netAssetValue) {
+        this.positionMap = positionMap;
         this.netAssetValue = netAssetValue;
     }
 
-    public List<Position> getPositionList() {
-        return positionList;
+    public Map<String, Position> getPositionMap() {
+        return positionMap;
     }
 
-    public void setPositionList(List<Position> positionList) {
-        this.positionList = positionList;
+    public void setPositionMap(Map<String, Position> positionMap) {
+        this.positionMap = positionMap;
     }
 
     public double getNetAssetValue() {
@@ -39,7 +36,7 @@ public class Portfolio {
     @Override
     public String toString() {
         return "Portfolio{" +
-                "securityList=" + positionList +
+                "positionMap=" + positionMap +
                 ", netAssetValue=" + netAssetValue +
                 '}';
     }
