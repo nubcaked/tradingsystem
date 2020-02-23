@@ -2,6 +2,7 @@ package com.liangwei.tradingsystem.portfoliobroker;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.Subscribe;
 import com.liangwei.tradingsystem.DataProviderFlag;
 import com.liangwei.tradingsystem.dto.Portfolio;
 import com.liangwei.tradingsystem.dto.Position;
@@ -14,8 +15,9 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.List;
 
-@Component
 public class PortfolioPublisher {
+
+    private Portfolio portfolio;
 
     @Autowired
     EventBus eventBus;
@@ -29,6 +31,16 @@ public class PortfolioPublisher {
     @Autowired
     DataProviderFlag dataProviderFlag;
 
+    public PortfolioPublisher(Portfolio portfolio) {
+        this.portfolio = portfolio;
+    }
+
+
+    @Subscribe
+    public void testSubscribe(String s) {
+        System.out.println(s);
+    }
+
     @Async
     public void publishPortfolio() {
         try {
@@ -40,6 +52,7 @@ public class PortfolioPublisher {
                 } catch (InterruptedException e) {}
                 Portfolio portfolio = portfolioService.populatePortfolio(positionList);
                 System.out.println(portfolio); //TODO: publish instead of printing
+                System.out.println();
             }
         } catch (IOException e) {}
     }

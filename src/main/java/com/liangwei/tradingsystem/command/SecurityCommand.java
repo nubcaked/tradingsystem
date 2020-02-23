@@ -1,5 +1,7 @@
 package com.liangwei.tradingsystem.command;
 
+import com.google.common.eventbus.EventBus;
+import com.liangwei.tradingsystem.dto.Portfolio;
 import com.liangwei.tradingsystem.portfoliobroker.PortfolioPublisher;
 import com.liangwei.tradingsystem.portfoliobroker.PortfolioSubscriber;
 import com.liangwei.tradingsystem.DataProviderFlag;
@@ -38,7 +40,10 @@ public class SecurityCommand {
     PortfolioService portfolioService;
 
     @Autowired
-    PortfolioPublisher portfolioPublisher;
+    EventBus eventBus;
+
+//    @Autowired
+//    PortfolioPublisher portfolioPublisher;
 
     @ShellMethod("Load H2 database with data")
     public String getSecurities() throws Exception {
@@ -57,7 +62,7 @@ public class SecurityCommand {
 //        return securityRepository.findByTicker("GOOG").get().getPrice().toString();
 //        return simpleDateFormat.format(new GregorianCalendar().getTime());
 //        return Math.exp(-12) + "";
-        portfolioPublisher.publishPortfolio();
+//        portfolioPublisher.publishPortfolio();
         return "";
     }
 
@@ -65,7 +70,11 @@ public class SecurityCommand {
     public void startPriceMovements() {
         List<Security> securityList = securityService.getStockPriceList();
         dataProviderFlag.setRunFlag(true);
-        portfolioPublisher.publishPortfolio();
+        PortfolioPublisher portfolioPublisher = new PortfolioPublisher(new Portfolio());
+        eventBus.register(portfolioPublisher);
+        //TODO: by making PortfolioPublisher non-singleton, i can generate one instance for each portfolio and listen to stock price update and
+        //TODO: update portfolio and publish portfolio
+//        portfolioPublisher.publishPortfolio();
         securityList.forEach(security -> securityService.moveStockPrice(security));
     }
 

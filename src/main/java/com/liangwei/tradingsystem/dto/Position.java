@@ -5,11 +5,17 @@ public class Position {
     private String ticker;
     private String type;
     private int quantity;
+    private double marketValue;
 
     public Position(String ticker, String type, int quantity) {
+        this(ticker, type, quantity, -1.0);
+    }
+
+    public Position(String ticker, String type, int quantity, double marketValue) {
         this.ticker = ticker;
         this.type = type;
         this.quantity = quantity;
+        this.marketValue = marketValue;
     }
 
     public String getTicker() {
@@ -36,12 +42,21 @@ public class Position {
         this.quantity = quantity;
     }
 
+    public double getMarketValue() {
+        return marketValue;
+    }
+
+    public void setMarketValue(double marketValue) {
+        this.marketValue = marketValue;
+    }
+
     @Override
     public String toString() {
         return "Position{" +
                 "ticker='" + ticker + '\'' +
                 ", type='" + type + '\'' +
                 ", quantity=" + quantity +
+                ", marketValue=" + marketValue +
                 '}';
     }
 }

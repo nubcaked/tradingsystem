@@ -22,9 +22,10 @@ public class PortfolioService {
 //        double netAssetValue = 0.0;
         positionList.forEach(position -> {
             Security security = securityRepository.findByTicker(position.getTicker()).get();
+            position.setMarketValue(security.getPrice() * position.getQuantity());
             //TODO: map security to securityDTO so can print individual position market value
-            portfolio.getSecurityList().add(security);
-            portfolio.setNetAssetValue(portfolio.getNetAssetValue() + (security.getPrice() * position.getQuantity()));
+            portfolio.getPositionList().add(position);
+            portfolio.setNetAssetValue(portfolio.getNetAssetValue() + position.getMarketValue());
         });
 
         return portfolio;

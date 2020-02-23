@@ -31,9 +31,6 @@ public class SecurityService {
     PortfolioSubscriber portfolioSubscriber;
 
     @Autowired
-    PortfolioPublisher portfolioPublisher;
-
-    @Autowired
     DataProviderFlag dataProviderFlag;
 
     public String displaySecurities() {
@@ -82,7 +79,7 @@ public class SecurityService {
             Thread.sleep(deltaTime);
             stock.setPrice(newPrice);
             securityRepository.save(stock);
-//                eventBus.post(security);
+            eventBus.post("TESTING TESTING");
         } catch (InterruptedException e) {}
     }
 
