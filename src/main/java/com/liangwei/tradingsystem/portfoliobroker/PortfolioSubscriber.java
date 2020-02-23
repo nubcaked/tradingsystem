@@ -16,5 +16,6 @@ public class PortfolioSubscriber {
     @Subscribe
     public void portfolioSubscriber(Portfolio portfolio) {
         System.out.println(portfolio);
+        System.out.println();
     }
 }
